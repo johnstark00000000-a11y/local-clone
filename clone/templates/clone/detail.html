@@ -1,0 +1,12 @@
+{% extends "clone/base.html" %}
+{% block content %}
+<h1>{{ clone.subject_name }}</h1>
+<p class="muted">{{ clone.display_alias }} · {{ clone.get_architecture_display }}</p>
+<div class="card">Status: <b>{{ clone.get_status_display }}</b><br>
+Density: {{ clone.synaptic_density }} · Coherence: {{ clone.coherence }}</div>
+{% if clone.status != "ready" and clone.status != "failed" %}
+<form method="post" action="/clone/{{ clone.pk }}/advance/">{% csrf_token %}
+<button class="btn" type="submit">Advance stage</button>
+</form>
+{% else %}<p>Clone ready.</p>{% endif %}
+{% endblock %}
