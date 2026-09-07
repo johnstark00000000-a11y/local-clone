@@ -1,0 +1,10 @@
+{% extends "clone/base.html" %}
+{% block content %}
+<h1>Neural Clone Protocol</h1>
+<p class="muted">Simulated connectome lab · Django on Render</p>
+<p><a class="btn" href="/initiate/">Initiate clone</a></p>
+<div class="card"><b>Subjects:</b> {{ stats.total }} · <b>Active:</b> {{ stats.active }} · <b>Ready:</b> {{ stats.ready }}</div>
+{% for c in clones %}
+<div class="card"><a href="/clone/{{ c.pk }}/">{{ c.subject_name }}</a> — {{ c.get_status_display }}</div>
+{% empty %}<p class="muted">No clones yet.</p>{% endfor %}
+{% endblock %}
