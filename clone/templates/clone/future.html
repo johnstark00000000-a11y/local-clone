@@ -1,0 +1,9 @@
+{% extends "clone/base.html" %}
+{% block content %}
+<h1>Future simulate — {{ p.name }}</h1>
+<div class="card"><p class="muted">{{ p.future_note }}</p></div>
+<form method="post">{% csrf_token %}
+<button class="btn" type="submit">Dubara simulate (latest chat + uploads se)</button>
+</form>
+<p class="muted"><a href="/p/{{ p.id }}/">← Dashboard</a></p>
+{% endblock %}
