@@ -1,30 +1,35 @@
 import uuid
 from django.db import models
 from django.utils import timezone
-class NeuralClone(models.Model):
-    STATUS_CHOICES = [
-        ("queued", "Queued"), ("scanning", "Cortical Scan"), ("mapping", "Connectome Mapping"),
-        ("encoding", "Synaptic Encoding"), ("stabilizing", "Pattern Stabilization"),
-        ("ready", "Clone Ready"), ("failed", "Failed"),
-    ]
-    ARCHITECTURE = [
-        ("cortical-lattice", "Cortical Lattice v4"), ("hippocampal-mesh", "Hippocampal Mesh"),
-        ("thalamic-relay", "Thalamic Relay Grid"), ("full-connectome", "Full Connectome Mirror"),
-    ]
+
+class BrainProfile(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    subject_name = models.CharField(max_length=120)
-    alias = models.CharField(max_length=80, blank=True)
-    architecture = models.CharField(max_length=40, choices=ARCHITECTURE, default="cortical-lattice")
-    fidelity = models.PositiveSmallIntegerField(default=87)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="queued")
-    notes = models.TextField(blank=True)
-    synaptic_density = models.FloatField(default=0.0)
-    coherence = models.FloatField(default=0.0)
+    name = models.CharField(max_length=80)
+    pin = models.CharField(max_length=20, blank=True)  # simple access code
+    mood = models.CharField(max_length=40, default="calm")
+    personality = models.CharField(max_length=40, default="balanced")
+    dream = models.CharField(max_length=200, blank=True)
+    fear = models.CharField(max_length=200, blank=True)
+    hobby = models.CharField(max_length=120, blank=True)
+    about = models.TextField(blank=True)
+    summary = models.TextField(blank=True)
+    future_note = models.TextField(blank=True)
     created_at = models.DateTimeField(default=timezone.now)
-    updated_at = models.DateTimeField(auto_now=True)
-    class Meta:
-        ordering = ["-created_at"]
+
     def __str__(self):
-        return f"{self.subject_name} ({self.get_status_display()})"
-    def display_alias(self):
-        return self.alias or f"NCP-{str(self.id)[:8].upper()}"
+        return self.name
+
+class ChatMessage(models.Model):
+    profile = models.ForeignKey(BrainProfile, on_delete=models.CASCADE, related_name="messages")
+    role = models.CharField(max_length=10)  # user | clone
+    text = models.TextField()
+    created_at = models.DateTimeField(default=timezone.now)
+
+class UploadItem(models.Model):
+    profile = models.ForeignKey(BrainProfile, on_delete=models.CASCADE, related_name="uploads")
+    kind = models.CharField(max_length=20, default="file")  # file | video | image | log
+    title = models.CharField(max_length=120, blank=True)
+    file = models.FileField(upload_to="brain_uploads/%Y/%m/", blank=True, null=True)
+    note = models.TextField(blank=True)
+    analysis = models.TextField(blank=True)
+    created_at = models.DateTimeField(default=timezone.now)
