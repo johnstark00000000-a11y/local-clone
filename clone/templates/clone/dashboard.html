@@ -1,0 +1,21 @@
+{% extends "clone/base.html" %}
+{% block content %}
+<h1>{{ p.name }} — Dashboard</h1>
+<p class="muted">{{ p.summary }}</p>
+<div class="row">
+<a class="btn" href="/p/{{ p.id }}/chat/">Chat + history</a>
+<a class="btn btn2" href="/p/{{ p.id }}/upload/">Upload video/file/log</a>
+<a class="btn btn2" href="/p/{{ p.id }}/future/">Future simulate</a>
+</div>
+<div class="card"><b>Future snapshot</b><p class="muted">{{ p.future_note|truncatechars:280 }}</p></div>
+<div class="card"><b>Recent uploads</b>
+{% for u in uploads %}
+<div class="muted">• {{ u.kind }} — {{ u.title }} — {{ u.analysis|truncatechars:90 }}</div>
+{% empty %}<div class="muted">Abhi koi upload nahi</div>{% endfor %}
+</div>
+<div class="card"><b>Last chats</b>
+{% for c in chats %}
+<div class="muted">{{ c.role }}: {{ c.text|truncatechars:80 }}</div>
+{% empty %}<div class="muted">Chat khali</div>{% endfor %}
+</div>
+{% endblock %}
