@@ -1,0 +1,19 @@
+{% extends "clone/base.html" %}
+{% block content %}
+<h1>New Brain profile</h1>
+<form method="post" class="card">{% csrf_token %}
+<label>Name *</label><input name="name" required placeholder="Tera naam">
+<label>PIN (optional, yaad rakh)</label><input name="pin" placeholder="4 digit etc">
+<label>Mood</label><select name="mood">
+<option>calm</option><option>happy</option><option>stressed</option><option>excited</option><option>sad</option>
+</select>
+<label>Personality</label><select name="personality">
+<option>balanced</option><option>introvert</option><option>extrovert</option><option>ambitious</option><option>chill</option><option>overthinker</option>
+</select>
+<label>Dream / goal</label><input name="dream" placeholder="Kya banana hai life me">
+<label>Fear / tension</label><input name="fear" placeholder="Kya dar lagta hai">
+<label>Hobby</label><input name="hobby" placeholder="Music, gym, coding...">
+<label>About you</label><textarea name="about" placeholder="2-3 lines"></textarea>
+<button class="btn" type="submit">Create Brain 2</button>
+</form>
+{% endblock %}
