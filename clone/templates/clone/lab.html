@@ -1,0 +1,7 @@
+{% extends "clone/base.html" %}
+{% block content %}
+<h1>Lab</h1>
+{% for c in clones %}
+<div class="card"><a href="/clone/{{ c.pk }}/">{{ c.subject_name }}</a> — {{ c.get_status_display }} — {{ c.fidelity }}%</div>
+{% empty %}<p class="muted">Empty lab.</p>{% endfor %}
+{% endblock %}
