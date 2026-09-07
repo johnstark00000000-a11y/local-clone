@@ -1,25 +1,48 @@
-import uuid
-import django.utils.timezone
+import uuid, django.utils.timezone
 from django.db import migrations, models
+import django.db.models.deletion
 class Migration(migrations.Migration):
     initial = True
     dependencies = []
     operations = [
         migrations.CreateModel(
-            name="NeuralClone",
+            name="BrainProfile",
             fields=[
                 ("id", models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ("subject_name", models.CharField(max_length=120)),
-                ("alias", models.CharField(blank=True, max_length=80)),
-                ("architecture", models.CharField(choices=[("cortical-lattice", "Cortical Lattice v4"), ("hippocampal-mesh", "Hippocampal Mesh"), ("thalamic-relay", "Thalamic Relay Grid"), ("full-connectome", "Full Connectome Mirror")], default="cortical-lattice", max_length=40)),
-                ("fidelity", models.PositiveSmallIntegerField(default=87)),
-                ("status", models.CharField(choices=[("queued", "Queued"), ("scanning", "Cortical Scan"), ("mapping", "Connectome Mapping"), ("encoding", "Synaptic Encoding"), ("stabilizing", "Pattern Stabilization"), ("ready", "Clone Ready"), ("failed", "Failed")], default="queued", max_length=20)),
-                ("notes", models.TextField(blank=True)),
-                ("synaptic_density", models.FloatField(default=0.0)),
-                ("coherence", models.FloatField(default=0.0)),
+                ("name", models.CharField(max_length=80)),
+                ("pin", models.CharField(blank=True, max_length=20)),
+                ("mood", models.CharField(default="calm", max_length=40)),
+                ("personality", models.CharField(default="balanced", max_length=40)),
+                ("dream", models.CharField(blank=True, max_length=200)),
+                ("fear", models.CharField(blank=True, max_length=200)),
+                ("hobby", models.CharField(blank=True, max_length=120)),
+                ("about", models.TextField(blank=True)),
+                ("summary", models.TextField(blank=True)),
+                ("future_note", models.TextField(blank=True)),
                 ("created_at", models.DateTimeField(default=django.utils.timezone.now)),
-                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
-            options={"ordering": ["-created_at"]},
+        ),
+        migrations.CreateModel(
+            name="UploadItem",
+            fields=[
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("kind", models.CharField(default="file", max_length=20)),
+                ("title", models.CharField(blank=True, max_length=120)),
+                ("file", models.FileField(blank=True, null=True, upload_to="brain_uploads/%Y/%m/")),
+                ("note", models.TextField(blank=True)),
+                ("analysis", models.TextField(blank=True)),
+                ("created_at", models.DateTimeField(default=django.utils.timezone.now)),
+                ("profile", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name="uploads", to="clone.brainprofile")),
+            ],
+        ),
+        migrations.CreateModel(
+            name="ChatMessage",
+            fields=[
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("role", models.CharField(max_length=10)),
+                ("text", models.TextField()),
+                ("created_at", models.DateTimeField(default=django.utils.timezone.now)),
+                ("profile", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name="messages", to="clone.brainprofile")),
+            ],
         ),
     ]
