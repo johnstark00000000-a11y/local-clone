@@ -1,0 +1,19 @@
+{% extends "clone/base.html" %}
+{% block content %}
+<h1>Upload memory — {{ p.name }}</h1>
+<p class="muted">Video / image / file / text log. Free Render pe badi video limit ho sakti hai (thodi chhoti file better).</p>
+<form method="post" enctype="multipart/form-data" class="card">{% csrf_token %}
+<label>Type</label>
+<select name="kind">
+<option value="video">Video</option>
+<option value="image">Image</option>
+<option value="file">File</option>
+<option value="log">Text log only</option>
+</select>
+<label>Title</label><input name="title" placeholder="Jaise: morning routine clip">
+<label>Note / kya hai isme</label><textarea name="note" placeholder="Is video/log me kya important hai"></textarea>
+<label>File (optional for log)</label><input type="file" name="file">
+<button class="btn" type="submit">Clone me add karo</button>
+</form>
+<p><a href="/p/{{ p.id }}/">← Dashboard</a></p>
+{% endblock %}
