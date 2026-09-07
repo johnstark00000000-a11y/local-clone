@@ -1,2 +1,2 @@
-# Neural Clone Protocol
-Django app for Render + GitHub. Simulated neural clone lab.
+# Brain 2 — Mind Clone Lab
+Logs + chat history + uploads + future simulation (demo).
