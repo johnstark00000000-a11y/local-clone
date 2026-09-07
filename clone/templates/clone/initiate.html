@@ -1,0 +1,22 @@
+{% extends "clone/base.html" %}
+{% block content %}
+<h1>Initiate clone</h1>
+<form method="post" class="card">{% csrf_token %}
+<label>Subject name</label><br>
+<input name="subject_name" required style="width:100%;padding:8px;margin:6px 0"><br>
+<label>Alias</label><br>
+<input name="alias" style="width:100%;padding:8px;margin:6px 0"><br>
+<label>Architecture</label><br>
+<select name="architecture" style="width:100%;padding:8px;margin:6px 0">
+<option value="cortical-lattice">Cortical Lattice v4</option>
+<option value="hippocampal-mesh">Hippocampal Mesh</option>
+<option value="thalamic-relay">Thalamic Relay Grid</option>
+<option value="full-connectome">Full Connectome Mirror</option>
+</select><br>
+<label>Fidelity</label><br>
+<input type="number" name="fidelity" value="87" min="50" max="99" style="width:100%;padding:8px;margin:6px 0"><br>
+<label>Notes</label><br>
+<textarea name="notes" style="width:100%;padding:8px;margin:6px 0"></textarea><br>
+<button class="btn" type="submit">Begin scan</button>
+</form>
+{% endblock %}
