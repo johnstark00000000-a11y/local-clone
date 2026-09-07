@@ -1,0 +1,15 @@
+{% extends "clone/base.html" %}
+{% block content %}
+<h1>Chat — {{ p.name }}</h1>
+<p class="muted"><a href="/p/{{ p.id }}/">← Dashboard</a> · history save hoti hai</p>
+{% for c in chats %}
+<div class="bubble {% if c.role == 'user' %}me{% else %}bot{% endif %}">
+<b>{% if c.role == 'user' %}Tu{% else %}Clone{% endif %}:</b> {{ c.text }}
+</div>
+{% empty %}<p class="muted">Pehla message bhejo.</p>{% endfor %}
+<form method="post" class="card">{% csrf_token %}
+<label>Message</label>
+<input name="message" placeholder="Bol kuchh..." autofocus>
+<button class="btn" type="submit">Send</button>
+</form>
+{% endblock %}
