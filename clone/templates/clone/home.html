@@ -1,10 +1,12 @@
 {% extends "clone/base.html" %}
 {% block content %}
-<h1>Neural Clone Protocol</h1>
-<p class="muted">Simulated connectome lab · Django on Render</p>
-<p><a class="btn" href="/initiate/">Initiate clone</a></p>
-<div class="card"><b>Subjects:</b> {{ stats.total }} · <b>Active:</b> {{ stats.active }} · <b>Ready:</b> {{ stats.ready }}</div>
-{% for c in clones %}
-<div class="card"><a href="/clone/{{ c.pk }}/">{{ c.subject_name }}</a> — {{ c.get_status_display }}</div>
-{% empty %}<p class="muted">No clones yet.</p>{% endfor %}
+<h1>Brain 2 — Mind Lab</h1>
+<p class="muted">Profile + chat history + uploads (video/file/logs) se ek simulated clone banta hai. Future page possible paths dikhata hai.</p>
+<p class="muted"><b>Note:</b> Real brain copy nahi — tere inputs ka smart demo hai.</p>
+<p><a class="btn" href="/create/">Apna Brain profile banao</a></p>
+<div class="card">Total profiles: <b>{{ total }}</b></div>
+{% for x in profiles %}
+<div class="card"><a href="/p/{{ x.id }}/"><b>{{ x.name }}</b></a>
+<div class="muted">{{ x.personality }} · {{ x.mood }}</div></div>
+{% endfor %}
 {% endblock %}
